@@ -3,7 +3,6 @@ package com.sahota;
 import com.sahota.utility.DataLoader;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 public class Main {
 
