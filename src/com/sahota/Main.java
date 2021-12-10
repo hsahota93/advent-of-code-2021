@@ -3,6 +3,7 @@ package com.sahota;
 import com.sahota.utility.DataLoader;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Main {
 
@@ -17,7 +18,20 @@ public class Main {
 
     private static void day1part2(List<Integer> data, Integer window) {
 
-        // TODO: implement
+        int numIncreases = 0;
+
+        for (int i = window; i < data.size(); i++) {
+
+            int currentDepth = data.get(i);
+            int previousDepth = data.get(i - window);
+
+            if (currentDepth > previousDepth) {
+
+                numIncreases++;
+            }
+        }
+
+        System.out.println("D1P2 depth increased [" + numIncreases + "] times.");
     }
 
     public static void day1Part1(List<Integer> data) {
@@ -27,7 +41,7 @@ public class Main {
         for (int i = 1; i < data.size(); i++) {
 
             int currentDepth = data.get(i);
-            int previousDepth = data.get(i-1);
+            int previousDepth = data.get(i - 1);
 
             if (currentDepth > previousDepth) {
 
@@ -35,7 +49,6 @@ public class Main {
             }
         }
 
-        System.out.println("The depth increased [" + numIncreases + "] times.");
-    }
+        System.out.println("D1P1 depth increased [" + numIncreases + "] times.");
     }
 }
