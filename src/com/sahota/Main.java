@@ -1,6 +1,6 @@
 package com.sahota;
 
-import com.sahota.data.DataLoader;
+import com.sahota.utility.DataLoader;
 
 import java.util.List;
 
@@ -11,12 +11,18 @@ public class Main {
         DataLoader dataLoader = new DataLoader();
         List<Integer> day1Data = dataLoader.getInputFile("day-1-input.txt");
 
+        day1Part1(day1Data);
+        day1part2(day1Data, 3);
+    }
+
+    private static void day1part2(List<Integer> data, Integer window) {
+
         int numIncreases = 0;
 
-        for (int i = 1; i < day1Data.size(); i++) {
+        for (int i = window; i < data.size(); i++) {
 
-            int currentDepth = day1Data.get(i);
-            int previousDepth = day1Data.get(i-1);
+            int currentDepth = data.get(i);
+            int previousDepth = data.get(i - window);
 
             if (currentDepth > previousDepth) {
 
@@ -24,6 +30,24 @@ public class Main {
             }
         }
 
-        System.out.println("The depth increased [" + numIncreases + "] times.");
+        System.out.println("D1P2 depth increased [" + numIncreases + "] times.");
+    }
+
+    public static void day1Part1(List<Integer> data) {
+
+        int numIncreases = 0;
+
+        for (int i = 1; i < data.size(); i++) {
+
+            int currentDepth = data.get(i);
+            int previousDepth = data.get(i - 1);
+
+            if (currentDepth > previousDepth) {
+
+                numIncreases++;
+            }
+        }
+
+        System.out.println("D1P1 depth increased [" + numIncreases + "] times.");
     }
 }
