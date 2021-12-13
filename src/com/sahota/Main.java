@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
         DataLoader dataLoader = new DataLoader();
-        List<Integer> day1Data = dataLoader.getInputFile("day-1-input.txt");
+        List<Integer> day1Data = dataLoader.getDay1Input("day-1-input.txt");
 
         day1Part1(day1Data);
         day1part2(day1Data, 3);
