@@ -33,4 +33,28 @@ public class DataLoader {
 
         return data;
     }
+
+    public List<String> getDay2Input(String fileName) {
+
+        ArrayList<String> data = new ArrayList<>();
+
+        try {
+            File myObj = new File(fileName);
+            Scanner myReader = new Scanner(myObj);
+
+            while (myReader.hasNextLine()) {
+
+                String directions = myReader.nextLine();
+                data.add(directions);
+            }
+
+            myReader.close();
+        } catch (FileNotFoundException e) {
+
+            System.out.println("Couldn't find the file...");
+            e.printStackTrace();
+        }
+
+        return data;
+    }
 }
