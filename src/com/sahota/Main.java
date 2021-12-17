@@ -2,9 +2,9 @@ package com.sahota;
 
 import com.sahota.utility.DataLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import static org.junit.Assert.*;
 
 public class Main {
 
@@ -16,7 +16,8 @@ public class Main {
 
         day1Part1(day1Data);
         day1part2(day1Data, 3);
-        day3Part1(day2Data);
+        day2Part1(day2Data);
+        day2Part2(day2Data);
     }
 
     private static void day1Part1(List<Integer> data) {
@@ -55,17 +56,10 @@ public class Main {
         System.out.println("D1P2 depth increased [" + numIncreases + "] times.");
     }
 
-    private static void day3Part1(List<String> data) {
+    private static void day2Part1(List<String> data) {
 
         AtomicInteger horizontalDirection = new AtomicInteger();
         AtomicInteger verticalDirection = new AtomicInteger();
-
-        ArrayList<String> horizontalModifiers = new ArrayList<>();
-        horizontalModifiers.add("forward");
-
-        ArrayList<String> verticalModifiers = new ArrayList<>();
-        verticalModifiers.add("up");
-        verticalModifiers.add("down");
 
         data.forEach(directionalInstruction -> {
 
@@ -75,28 +69,65 @@ public class Main {
             String direction = directionAndUnit[0];
             int directionalUnit = Integer.parseInt(directionAndUnit[1]);
 
-            // moving "up" reduces depth, and therefore decreases the vertical position
-            if (direction.equalsIgnoreCase("up")) {
-
-                verticalDirection.getAndAdd(-directionalUnit);
-
-                // moving "down" increases depth, and therefore increases the vertical position
-            } else if (direction.equalsIgnoreCase("down")) {
-
-                verticalDirection.getAndAdd(directionalUnit);
-
-                // moving forward increases the horizontal position
-            } else if (direction.equalsIgnoreCase("forward")) {
-
-                horizontalDirection.getAndAdd(directionalUnit);
-            } else {
-
-                System.out.println("Shit broke");
+            switch (direction) {
+                case "up" ->
+                        // moving "up" reduces depth, and therefore decreases the vertical position
+                        verticalDirection.getAndAdd(-directionalUnit);
+                case "down" ->
+                        // moving "down" increases depth, and therefore increases the vertical position
+                        verticalDirection.getAndAdd(directionalUnit);
+                case "forward" ->
+                        // moving forward increases the horizontal position
+                        horizontalDirection.getAndAdd(directionalUnit);
+                default -> System.out.println("Unknown direction detected...skipping");
             }
         });
 
         int d2p1Answer = Math.multiplyExact(horizontalDirection.get(), verticalDirection.get());
 
         System.out.println("D2P1: [" + d2p1Answer + "].");
+    }
+
+    /*
+    - down X increases your aim by X units.
+    - up X decreases your aim by X units.
+    - forward X does two things:
+        - It increases your horizontal position by X units.
+        - It increases your depth by your aim multiplied by X.
+     */
+    private static void day2Part2(List<String> data) {
+
+        AtomicInteger horizontalDirection = new AtomicInteger();
+        AtomicInteger verticalDirection = new AtomicInteger();
+        AtomicInteger aim = new AtomicInteger();
+
+        data.forEach(directionalInstruction -> {
+
+            // determine if it's a horizontal or vertical direction
+            // get the directional unit (how much to move)
+            String[] directionAndUnit = directionalInstruction.split(" ");
+            String direction = directionAndUnit[0];
+            int directionalUnit = Integer.parseInt(directionAndUnit[1]);
+
+            switch (direction) {
+                case "up" ->
+                        // moving "up" reduces depth, and therefore decreases the vertical position
+                        aim.getAndAdd(-directionalUnit);
+                case "down" ->
+                        // moving "down" increases depth, and therefore increases the vertical position
+                        aim.getAndAdd(directionalUnit);
+                case "forward" -> {
+                    // moving forward increases the horizontal position
+                    horizontalDirection.getAndAdd(directionalUnit);
+                    int newVerticalDirection = Math.multiplyExact(aim.get(), directionalUnit);
+                    verticalDirection.getAndAdd(newVerticalDirection);
+                }
+                default -> System.out.println("Unknown direction detected...skipping");
+            }
+        });
+
+        int d2p2Answer = Math.multiplyExact(horizontalDirection.get(), verticalDirection.get());
+
+        System.out.println("D2P2: [" + d2p2Answer + "].");
     }
 }
