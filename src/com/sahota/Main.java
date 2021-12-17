@@ -35,6 +35,7 @@ public class Main {
             }
         }
 
+        // Answer was: 1462
         System.out.println("D1P1 depth increased [" + numIncreases + "] times.");
     }
 
@@ -85,6 +86,7 @@ public class Main {
 
         int d2p1Answer = Math.multiplyExact(horizontalDirection.get(), verticalDirection.get());
 
+        // Answer was: 1936494
         System.out.println("D2P1: [" + d2p1Answer + "].");
     }
 
@@ -128,6 +130,7 @@ public class Main {
 
         int d2p2Answer = Math.multiplyExact(horizontalDirection.get(), verticalDirection.get());
 
+        // Answer was: 1997106066
         System.out.println("D2P2: [" + d2p2Answer + "].");
     }
 }
