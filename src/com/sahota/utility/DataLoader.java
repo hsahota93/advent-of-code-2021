@@ -57,4 +57,28 @@ public class DataLoader {
 
         return data;
     }
+
+    public String getDay3Input(String fileName) {
+
+        StringBuilder data = new StringBuilder();
+
+        try {
+            File myObj = new File(fileName);
+            Scanner myReader = new Scanner(myObj);
+
+            while (myReader.hasNextLine()) {
+
+                String binaryNumbers = myReader.nextLine();
+                data.append(binaryNumbers);
+            }
+
+            myReader.close();
+        } catch (FileNotFoundException e) {
+
+            System.out.println("Couldn't find the file...");
+            e.printStackTrace();
+        }
+
+        return data.toString().replace("\n", "");
+    }
 }
